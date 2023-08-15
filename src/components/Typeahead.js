@@ -1,17 +1,40 @@
 import React, { useState } from "react";
 
+const DropDown = ({ active, filtered, onClick }) => {
+  if (filtered.length) {
+    return (
+      <ul className="autocomplete">
+        {filtered.map(({id, name}, index) => {
+          return (
+            <li className={index === active ? 'active' : undefined} key={id} onClick={onClick}>
+              {name}
+            </li>
+          );
+        })}
+      </ul>
+    );
+  } else {
+    return (
+      <div className="no-autocomplete">
+        <em>Not found</em>
+      </div>
+    );
+  }
+}
+
+
 const Typeahead = (props) => {
   const [active, setActive] = useState(0);
   const [filtered, setFiltered] = useState([]);
   const [isShow, setIsShow] = useState(false);
   const [input, setInput] = useState("");
-  
+
   const onChange = e => {
     const { suggestions } = props;
     const input = e.currentTarget.value;
     const newFilteredSuggestions = suggestions.filter(
       suggestion =>
-        suggestion.toLowerCase().indexOf(input.toLowerCase()) > -1
+        suggestion.name.toLowerCase().indexOf(input.toLowerCase()) > -1
     );
     setActive(0);
     setFiltered(newFilteredSuggestions);
@@ -30,7 +53,7 @@ const Typeahead = (props) => {
     if (e.keyCode === 13) { // enter key
       setActive(0);
       setIsShow(false);
-      setInput(filtered[active])
+      setInput(filtered[active].name)
     }
     else if (e.keyCode === 38) { // up arrow
       return (active === 0) ? null : setActive(active - 1);
@@ -40,35 +63,6 @@ const Typeahead = (props) => {
     }
   };
 
-  const renderAutocomplete = () => {
-    if (isShow && input) {
-      if (filtered.length) {
-        return (
-          <ul className="autocomplete">
-            {filtered.map((suggestion, index) => {
-              let className;
-              if (index === active) {
-                className = "active";
-              }
-              return (
-                <li className={className} key={suggestion} onClick={onClick}>
-                  {suggestion}
-                </li>
-              );
-            })}
-          </ul>
-        );
-      } else {
-        return (
-          <div className="no-autocomplete">
-            <em>Not found</em>
-          </div>
-        );
-      }
-    }
-    return <></>;
-  }  
-
   return (
     <div>
       <input className="dropdown"
@@ -77,7 +71,14 @@ const Typeahead = (props) => {
         onKeyDown={onKeyDown}
         value={input}
       />
-      {renderAutocomplete()}
+      {/* {renderAutocomplete()} */}
+      {isShow && input &&
+        <DropDown
+          active={active}
+          filtered={filtered}
+          onClick={onClick}
+        />
+      }
     </div>
   );
 }
