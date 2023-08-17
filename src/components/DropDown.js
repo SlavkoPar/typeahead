@@ -14,38 +14,8 @@ import React, { useState, useEffect } from "react";
 // })
 
 
-const DropDown = ({ filter, active, onSelect }) => {
-  const [filtered, setFiltered] = useState(null);
-
-  useEffect(() => {
-    const getFilteredStates = async () => {
-      fetch(`/names/?search=${filter}&limit=10`, {
-        method: 'GET',
-        headers: {}
-      })
-        .then(response => {
-          return response.text().json()
-        })
-        .then(res => {
-          setFiltered(res.text)
-        })
-        .catch(error => console.error(error));
-    }
-    getFilteredStates();
-  }, [filter]);
-
-  if (active < 0)
-    active = 0;
-  else if (active > filtered.length)
-    active = filtered.length - 1;
-
-  const onClick = state => {
-    // setActive(0);
-    //setShow(false);
-    // setFiltered([]);
-    onSelect(state);
-  };
-
+const DropDown = ({ filtered, active, onSelect }) => {
+ 
   if (!filtered)
     return null;
 
@@ -57,8 +27,7 @@ const DropDown = ({ filter, active, onSelect }) => {
             <li
               className={index === active ? 'active' : undefined}
               key={state.id}
-              state={state}
-              onClick={(state) => onClick(state)}
+              onClick={(state) => onSelect(state)}
               // tabIndex={0}
             >
               {state.name}
