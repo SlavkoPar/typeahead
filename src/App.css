@@ -8,7 +8,7 @@ input {
   width: 300px;
 }
 
-.no-autocomplete {
+.no-suggestions {
   position: absolute;
   color: #999;
   padding: 8px;

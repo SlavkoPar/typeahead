@@ -1,82 +1,52 @@
-import React, { useState } from "react";
-
-const DropDown = ({ active, filtered, onClick }) => {
-  if (filtered.length) {
-    return (
-      <ul className="autocomplete">
-        {filtered.map(({id, name}, index) => {
-          return (
-            <li className={index === active ? 'active' : undefined} key={id} onClick={onClick}>
-              {name}
-            </li>
-          );
-        })}
-      </ul>
-    );
-  } else {
-    return (
-      <div className="no-autocomplete">
-        <em>Not found</em>
-      </div>
-    );
-  }
-}
-
+import React, { useState, useEffect } from "react";
+import DropDown from './DropDown'
 
 const Typeahead = (props) => {
+
+  const [selections, setSelections] = useState([]);
+
   const [active, setActive] = useState(0);
-  const [filtered, setFiltered] = useState([]);
-  const [isShow, setIsShow] = useState(false);
-  const [input, setInput] = useState("");
+  const [show, setShow] = useState(false);
+  const [filter, setFilter] = useState('');
 
-  const onChange = e => {
-    const { suggestions } = props;
-    const input = e.currentTarget.value;
-    const newFilteredSuggestions = suggestions.filter(
-      suggestion =>
-        suggestion.name.toLowerCase().indexOf(input.toLowerCase()) > -1
-    );
-    setActive(0);
-    setFiltered(newFilteredSuggestions);
-    setIsShow(true);
-    setInput(e.currentTarget.value)
+  const onChangeInput = e => {
+    setShow(true);
+    setFilter(e.currentTarget.value)
   };
 
-  const onClick = e => {
-    setActive(0);
-    setFiltered([]);
-    setIsShow(false);
-    setInput(e.currentTarget.innerText)
-  };
-
-  const onKeyDown = e => {
+  const handleKeyDown = e => {
+    console.log(111)
     if (e.keyCode === 13) { // enter key
       setActive(0);
-      setIsShow(false);
-      setInput(filtered[active].name)
+      onSelect(e.currentTarget.state)
     }
     else if (e.keyCode === 38) { // up arrow
-      return (active === 0) ? null : setActive(active - 1);
+      return setActive(active - 1);
     }
     else if (e.keyCode === 40) { // down arrow
-      return (active - 1 === filtered.length) ? null : setActive(active + 1);
+      return setActive(active + 1);
     }
+  };
+
+  const onSelect = state => {
+    setShow(false);
+    setSelections(arr => arr.push(state))
+    setFilter('')
   };
 
   return (
     <div>
       <input className="dropdown"
         type="text"
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-        value={input}
+        onChange={onChangeInput}
+        value={filter}
+        onKeyDown={handleKeyDown}
       />
-      {/* {renderAutocomplete()} */}
-      {isShow && input &&
+      {show && filter &&
         <DropDown
+          filter={filter}
           active={active}
-          filtered={filtered}
-          onClick={onClick}
+          onSelect={onSelect}
         />
       }
     </div>
