@@ -28,13 +28,14 @@ input {
   overflow-y: auto;
   padding-left: 0;
   width: calc(300px + 1rem);
+  background-color: lightgray;
 }
 
 .autocomplete li {
-  padding: 8px;
+  padding: 3px 5px;
 }
 
-.autocomplete > .active,
+.autocomplete>.active,
 .autocomplete li:hover {
   background-color: darkgray;
   cursor: pointer;
@@ -43,4 +44,35 @@ input {
 
 .autocomplete li:not(:last-of-type) {
   border-bottom: 1px solid #999;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  border: 1px solid blue;
+}
+
+.selections {
+  /* flex-wrap: nowrap; */
+}
+
+ul {
+  padding: 0 5px;
+  margin: 3px;
+}
+
+.search-box li {
+  list-style: none;
+  display: inline-block;
+  padding: 0 3px;
+}
+
+.selection {
+  border: 1px solid silver;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  flex-wrap: nowrap;
 }

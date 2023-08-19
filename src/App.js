@@ -9,10 +9,10 @@ function App() {
 
   return (
     <div className="App">
-      <Typeahead />
+      <Typeahead multiselect={false} />
       <div style={{padding: '25px', border: '1px solid navy'}}>
-        Pasta
-        Gambori
+        Something 
+        bellow
       </div>
     </div>
   );

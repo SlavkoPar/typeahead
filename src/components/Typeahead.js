@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+
+import SearchBox from './SearchBox'
 import DropDown from './DropDown'
 
-const Typeahead = (props) => {
+const Typeahead = ({ multiselect }) => {
 
   const [selections, setSelections] = useState([]);
 
@@ -10,31 +12,38 @@ const Typeahead = (props) => {
   const [filter, setFilter] = useState('');
   const [filtered, setFiltered] = useState(null);
 
-
   const onChangeInput = e => {
     setShow(true);
     setFilter(e.currentTarget.value)
   };
 
   const handleKeyDown = e => {
-    console.log(111)
     if (e.keyCode === 13) { // enter key
       setActive(0);
-      onSelect(e.currentTarget.state)
+      onSelect(filtered[active]);
     }
     else if (e.keyCode === 38) { // up arrow
       return (active === 0) ? null : setActive(active - 1);
     }
     else if (e.keyCode === 40) { // down arrow
-      return (active - 1 === filtered.length) ? null : setActive(active + 1);
+      return (active === filtered.length - 1) ? null : setActive(active + 1);
     }
   };
 
   const onSelect = state => {
-    setShow(false);
-    setSelections(arr => arr.push(state))
-    setFilter('')
+    if (multiselect) {
+      setSelections([...selections, state]);
+    }
+    else {
+      setShow(false);
+      setFilter(state.name);
+    }
   };
+
+  const removeSelection = id => {
+    setSelections([...selections.filter(s => s.id !== id)]);
+  };
+
 
   useEffect(() => {
     const getFilteredStates = async () => {
@@ -56,11 +65,12 @@ const Typeahead = (props) => {
 
   return (
     <div>
-      <input className="dropdown"
-        type="text"
-        onChange={onChangeInput}
-        value={filter}
-        onKeyDown={handleKeyDown}
+      <SearchBox
+        filter={filter}
+        selections={selections}
+        onChangeInput={onChangeInput}
+        handleKeyDown={handleKeyDown}
+        removeSelection={removeSelection}
       />
       {show && filter &&
         <DropDown
