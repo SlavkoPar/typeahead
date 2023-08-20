@@ -15,8 +15,6 @@ export function configureFakeBackend() {
                 switch (true) {
                     case url.startsWith('/names') && method === 'GET':
                         return getStates();
-                    case url.match(/\/names\/\d+$/) && method === 'DELETE':
-                        return deleteState();
                     default:
                         // pass through any requests not handled above
                         return realFetch(url, opts)

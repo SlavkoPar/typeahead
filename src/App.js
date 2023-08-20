@@ -1,4 +1,9 @@
 import './App.css';
+
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+import { Paper } from '@material-ui/core';
+
 import { configureFakeBackend } from './FakeBackend'
 import Typeahead from './components/Typeahead';
 
@@ -8,13 +13,18 @@ function App() {
   configureFakeBackend();
 
   return (
-    <div className="App">
-      <Typeahead multiselect={false} />
-      <div style={{padding: '25px', border: '1px solid navy'}}>
-        Something 
-        bellow
-      </div>
-    </div>
+    <Container maxWidth="sm" className="App">
+      <Paper>
+        <Typography variant="h4" component="h1" gutterBottom>
+          Multiselect Typeahead
+        </Typography>
+        <Typeahead multiselect={true} />
+        <div style={{ padding: '25px', border: '1px solid navy' }}>
+          Something
+          bellow
+        </div>
+      </Paper>
+    </Container>
   );
 }
 

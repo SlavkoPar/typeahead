@@ -2,23 +2,13 @@ body {
   padding: 100px;
 }
 
-input {
-  border: 1px solid #999;
-  padding: 8px;
-  width: 300px;
-}
-
 .no-suggestions {
   position: absolute;
   color: #999;
   padding: 8px;
 }
 
-.dropdown {
-  position: relative;
-}
-
-.autocomplete {
+.drop-down {
   position: absolute;
   border: 1px solid #999;
   border-top-width: 0;
@@ -31,41 +21,47 @@ input {
   background-color: lightgray;
 }
 
-.autocomplete li {
+.drop-down li {
   padding: 3px 5px;
 }
 
-.autocomplete>.active,
-.autocomplete li:hover {
+.drop-down>.active,
+.drop-down li:hover {
   background-color: darkgray;
   cursor: pointer;
   font-weight: 700;
 }
 
-.autocomplete li:not(:last-of-type) {
+.drop-down li:not(:last-of-type) {
   border-bottom: 1px solid #999;
+}
+
+.typeahead {
+  margin: 3px;
+  width: 90%;
 }
 
 .search-box {
   display: flex;
   align-items: center;
   justify-content: left;
-  border: 1px solid blue;
+  border: 1px solid silver;
+  border-radius: 5px;
+}
+
+.search-box input {
+  position: relative;
+  border: 1px solid #999;
+  padding: 3px;
+  width: 100%;
 }
 
 .selections {
-  /* flex-wrap: nowrap; */
-}
-
-ul {
-  padding: 0 5px;
-  margin: 3px;
-}
-
-.search-box li {
-  list-style: none;
-  display: inline-block;
-  padding: 0 3px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  max-width: 50%;
+  flex-wrap: wrap;
 }
 
 .selection {
@@ -75,4 +71,18 @@ ul {
   align-items: center;
   justify-content: left;
   flex-wrap: nowrap;
+  padding: 0px 3px;
 }
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+.search-box li {
+  list-style: none;
+  display: inline-block;
+  padding: 0 3px 0 0;
+}
+
+

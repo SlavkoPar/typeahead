@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 const DropDown = ({ filtered, active, onSelect }) => {
  
@@ -7,7 +7,7 @@ const DropDown = ({ filtered, active, onSelect }) => {
 
   if (filtered.length) {
     return (
-      <ul className="autocomplete">
+      <ul className="drop-down">
         {filtered.map((state, index) => {
           return (
             <li

@@ -32,13 +32,19 @@ const Typeahead = ({ multiselect }) => {
 
   const onSelect = state => {
     if (multiselect) {
-      setSelections([...selections, state]);
+      if (!selections.map(s => s.id).includes(state.id)) {
+        const arr = [...selections, state];
+        setSelections(arr)
+        if (filtered)
+          setFiltered(filtered.filter(f => !arr.map(s => s.id).includes(f.id)))
+      }
     }
     else {
       setShow(false);
       setFilter(state.name);
     }
   };
+
 
   const removeSelection = id => {
     setSelections([...selections.filter(s => s.id !== id)]);
@@ -54,7 +60,8 @@ const Typeahead = ({ multiselect }) => {
           return response.text()
         })
         .then(text => {
-          setFiltered(JSON.parse(text))
+          const filtered = JSON.parse(text);
+          setFiltered(filtered.filter(f => !selections.map(s => s.id).includes(f.id)))
         })
         .catch(error => console.error(error));
     }
@@ -64,7 +71,7 @@ const Typeahead = ({ multiselect }) => {
   }, [filter]);
 
   return (
-    <div>
+    <div className="typeahead">
       <SearchBox
         filter={filter}
         selections={selections}
