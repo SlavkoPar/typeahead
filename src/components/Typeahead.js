@@ -53,6 +53,7 @@ const Typeahead = ({ multiselect }) => {
 
   useEffect(() => {
     const getFilteredStates = async () => {
+      console.log('fetching')
       fetch(`/names/?search=${filter}&limit=10`, {
         method: 'GET'
       })
@@ -60,8 +61,7 @@ const Typeahead = ({ multiselect }) => {
           return response.text()
         })
         .then(text => {
-          const filtered = JSON.parse(text);
-          setFiltered(filtered.filter(f => !selections.map(s => s.id).includes(f.id)))
+          setFiltered(JSON.parse(text))
         })
         .catch(error => console.error(error));
     }
@@ -81,7 +81,7 @@ const Typeahead = ({ multiselect }) => {
       />
       {show && filter &&
         <DropDown
-          filtered={filtered}
+          filtered={filtered ? filtered.filter(f => !selections.map(s => s.id).includes(f.id)) : filtered }
           active={active}
           onSelect={onSelect}
         />
