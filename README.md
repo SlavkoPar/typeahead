@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Try It
+
+[Typeahead Multiselect](https://slavkopar.github.io/typeahead/)
+
 ## Available Scripts
 
 In the project directory, you can run:
