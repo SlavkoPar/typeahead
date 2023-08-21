@@ -37,6 +37,7 @@ const SearchBox = ({ onChangeInput, handleKeyDown, filter, selections, removeSel
         onChange={onChangeInput}
         value={filter}
         onKeyDown={handleKeyDown}
+        placeholder="select"
       />
     </div>
   )

@@ -20,8 +20,7 @@ function App() {
         </Typography>
         <Typeahead multiselect={true} />
         <div style={{ padding: '25px', border: '1px solid navy' }}>
-          Something
-          bellow
+          Something bellow
         </div>
       </Paper>
     </Container>

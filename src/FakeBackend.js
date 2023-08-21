@@ -54,12 +54,6 @@ export function configureFakeBackend() {
                 return ok(filtered);
             }
 
-            function deleteState() {
-                states = states.filter(x => x.id !== idFromUrl());
-                localStorage.setItem('states', JSON.stringify(states));
-                return ok();
-            }
-
             // helper functions
 
             function ok(body) {

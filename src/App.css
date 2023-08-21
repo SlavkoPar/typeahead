@@ -47,6 +47,7 @@ body {
   justify-content: left;
   border: 1px solid silver;
   border-radius: 5px;
+  padding: 3px;
 }
 
 .search-box input {
